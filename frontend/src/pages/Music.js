@@ -1,16 +1,16 @@
 
 import React from 'react';
 
-const Home = () => {
+const Music = () => {
     return (
         <section>
             <div> 
                 <h1>
-                    home page
+                    Music page
                 </h1>
             </div>
         </section>
     )
 };
 
-export default Home;
+export default Music;

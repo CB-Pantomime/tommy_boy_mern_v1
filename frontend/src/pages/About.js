@@ -1,16 +1,16 @@
 
 import React from 'react';
 
-const Home = () => {
+const About = () => {
     return (
         <section>
             <div> 
                 <h1>
-                    home page
+                    about page
                 </h1>
             </div>
         </section>
     )
 };
 
-export default Home;
+export default About;

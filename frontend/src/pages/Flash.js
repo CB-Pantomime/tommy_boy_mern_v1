@@ -1,16 +1,16 @@
 
 import React from 'react';
 
-const Home = () => {
+const Flash = () => {
     return (
         <section>
             <div> 
                 <h1>
-                    home page
+                    Flash page
                 </h1>
             </div>
         </section>
     )
 };
 
-export default Home;
+export default Flash;

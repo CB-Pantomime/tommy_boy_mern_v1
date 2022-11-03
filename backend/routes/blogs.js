@@ -2,7 +2,7 @@
 const express = require('express')
 const {
   getBlogs, 
-  getBlog, 
+  // getBlog, 
   createBlog, 
   deleteBlog, 
   updateBlog
@@ -10,19 +10,19 @@ const {
 
 const router = express.Router()
 
-// GET all workouts
+// GET all blogs
 router.get('/', getBlogs)
 
-// GET a single workout
-router.get('/:id', getBlog)
+    // GET a single blog  <-- Stretch Feature In Future
+// router.get('/:id', getBlog)
 
-// POST a new workout
+// POST a new blog
 router.post('/', createBlog)
 
-// DELETE a workout
+// DELETE a blog
 router.delete('/:id', deleteBlog)
 
-// UPDATE a workout
+// UPDATE a blog
 router.patch('/:id', updateBlog)
 
 module.exports = router

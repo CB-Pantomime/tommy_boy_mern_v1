@@ -1,16 +1,16 @@
 
 import React from 'react';
 
-const Home = () => {
+const Sculptures = () => {
     return (
         <section>
             <div> 
                 <h1>
-                    home page
+                    Sculptures page
                 </h1>
             </div>
         </section>
     )
 };
 
-export default Home;
+export default Sculptures;
