@@ -11,6 +11,9 @@ import Sculptures from './pages/Sculptures';
 import Collage from './pages/Collage';
 import Navbar from './components/Navbar'
 
+// auth
+import Signup from './pages/auth/Signup'
+import Login from './pages/auth/Login'
 
 function App() {
   return (
@@ -47,6 +50,15 @@ function App() {
             path="/about" 
             element={<About />} 
             />
+                                {/* AUTH */}
+                                <Route 
+                                  path="/signup" 
+                                  element={<Signup />} 
+                                  />
+                                <Route 
+                                  path="/login" 
+                                  element={<Login />} 
+                                  />
           </Routes>
         </div>
       </BrowserRouter>
