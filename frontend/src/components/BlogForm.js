@@ -1,8 +1,10 @@
 import { useState } from 'react'
 import { useBlogsContext } from '../hooks/useBlogsContext'
+import { useAuthContext } from '../hooks/useAuthContext'
 
 const BlogForm = () => {
   const { dispatch } = useBlogsContext()
+  const { user } = useAuthContext()
 
   const [title, setTitle] = useState('')
   const [words, setWords] = useState('')
@@ -18,7 +20,8 @@ const BlogForm = () => {
       method: 'POST',
       body: JSON.stringify(blog),
       headers: {
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${user.token}`
       }
     })
     const json = await response.json()

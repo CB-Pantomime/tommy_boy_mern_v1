@@ -8,21 +8,26 @@ const {
   updateBlog
 } = require('../controllers/blogController')
 
+const requireAuth = require('../middleware/requireAuth')
+
 const router = express.Router()
 
 // GET all blogs
 router.get('/', getBlogs)
 
-    // GET a single blog  <-- Stretch Feature In Future
+// **Stretch Feature In Future --> GET a single blog**   
 // router.get('/:id', getBlog)
 
+// Auth
+router.use(requireAuth)
+
 // POST a new blog
-router.post('/', createBlog)
+router.post('/', requireAuth, createBlog)
 
 // DELETE a blog
-router.delete('/:id', deleteBlog)
+router.delete('/:id', requireAuth, deleteBlog)
 
 // UPDATE a blog
-router.patch('/:id', updateBlog)
+router.patch('/:id', requireAuth, updateBlog)
 
 module.exports = router
