@@ -15,6 +15,7 @@ import Flash from './pages/Flash'
 import Music from './pages/Music'
 import Sculptures from './pages/Sculptures';
 import Collage from './pages/Collage';
+import Shop from './pages/Shop'
 import Navbar from './components/Navbar'
 
 // auth
@@ -59,6 +60,10 @@ function App() {
             path="/about" 
             element={<About />} 
             />
+          <Route 
+            path="/shop" 
+            element={<Shop />} 
+            />
 
           {/* AUTH */}
           <Route 
@@ -67,7 +72,7 @@ function App() {
             />
           <Route 
             path="/login" 
-            element={user ? <Blogs/> : <Login />} 
+            element={!user ? <Login/> : <Navigate to='/blogs' />} 
             />
 
           </Routes>

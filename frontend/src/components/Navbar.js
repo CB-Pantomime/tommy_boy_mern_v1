@@ -35,6 +35,9 @@ const Navbar = () => {
           <Link to="/about">
             <h1>about</h1>
           </Link>
+          <Link to="/shop">
+            <h1>Shop</h1>
+          </Link>
             <nav>
                 {user && (
                   <div>
@@ -44,8 +47,9 @@ const Navbar = () => {
                 )}
                   {!user && (
                   <div>
-                    <Link to="/login">Login</Link>
-                    <Link to="/signup">Signup</Link>
+                    {/* TO BE REFACTORED/REMOVED */}
+                     <Link to="/login">Login</Link> 
+                     <Link to="/signup">Signup</Link> 
                   </div>
                 )}
             </nav>      
