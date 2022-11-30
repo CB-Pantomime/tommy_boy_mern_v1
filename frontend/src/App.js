@@ -17,6 +17,8 @@ import Sculptures from './pages/Sculptures';
 import Collage from './pages/Collage';
 import Shop from './pages/Shop'
 import Navbar from './components/Navbar'
+import Upload from './components/Upload';
+import ShowImages from './pages/ShowImages';
 
 // auth
 import Signup from './pages/auth/Signup'
@@ -38,7 +40,7 @@ function App() {
             />
           <Route 
               path="/blogs" 
-              element={<Blogs />} 
+              element={<ShowImages />} 
             />
           <Route 
               path="/flash" 

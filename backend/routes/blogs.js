@@ -1,9 +1,11 @@
 
-const express = require('express')
+const express = require('express');
+const { cloudinary } = require('../utils/cloudinary');
 const {
   getBlogs, 
-  // getBlog, 
-  createBlog, 
+  getImages,
+  uploadImage,
+  // createBlog, 
   deleteBlog, 
   updateBlog
 } = require('../controllers/blogController')
@@ -13,21 +15,18 @@ const requireAuth = require('../middleware/requireAuth')
 const router = express.Router()
 
 // GET all blogs
-router.get('/', getBlogs)
+router.get('/', getImages)
 
-// **Stretch Feature In Future --> GET a single blog**   
-// router.get('/:id', getBlog)
-
-// Auth
+// ***** Auth Routes Below *****
 router.use(requireAuth)
 
 // POST a new blog
-router.post('/', requireAuth, createBlog)
+router.post('/', uploadImage);
+       
+// UPDATE a blog
+router.patch('/:id', updateBlog)
 
 // DELETE a blog
-router.delete('/:id', requireAuth, deleteBlog)
-
-// UPDATE a blog
-router.patch('/:id', requireAuth, updateBlog)
+router.delete('/:id', deleteBlog)
 
 module.exports = router

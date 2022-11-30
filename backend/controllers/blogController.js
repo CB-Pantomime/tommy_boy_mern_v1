@@ -1,64 +1,132 @@
 
+// const express = require("express");
+// const router = express.Router();
 const Blog = require('../models/blogModel')
 const mongoose = require('mongoose')
 
-// get all blogs
-const getBlogs = async (req, res) => {
-  const blogs = await Blog.find({}).sort({createdAt: -1})
+// bring in Cloudinary
+const { cloudinary } = require('../utils/cloudinary');
 
-  res.status(200).json(blogs)
-}
+
+// get all blogs
+// const getBlogs = (req, res, next) => {
+//   Blog.find()
+//     .select('title words _id image')
+//     .sort({createdAt: -1})
+//     .exec()
+//     .then(docs => {
+//       const response = {
+//         count: docs.length,
+//         blogs: docs.map(doc => {
+//           return {
+//             title: doc.title,
+//             words: doc.words,
+//             image: doc.image,
+//             _id: doc._id,
+//             request: {
+//               type: 'GET',
+//               url: 'http://localhost:3000/blogs/' + doc._id
+//             }
+//           };
+//         })
+//       };
+//       res.status(200).json(response);
+//       })
+//       .catch(err => {
+//             console.log(err);
+//             res.status(500).json({
+//               error: err
+//             });
+//           });  
+      // Closing Bracket Here:
+// };
 
 // get a single blog
-const getBlog = async (req, res) => {
-  const { id } = req.params
+// const getBlog = async (req, res) => {
+//   const { id } = req.params
 
-  if (!mongoose.Types.ObjectId.isValid(id)) {
-    return res.status(404).json({error: 'Mongoose ObID No such blog'})
-  }
+//   if (!mongoose.Types.ObjectId.isValid(id)) {
+//     return res.status(404).json({error: 'Mongoose ObID No such blog'})
+//   }
 
-  const blog = await Blog.findById(id)
+//   const blog = await Blog.findById(id)
 
-  if (!blog) {
-    return res.status(404).json({error: 'Collection findById No such blog'})
-  }
+//   if (!blog) {
+//     return res.status(404).json({error: 'Collection findById No such blog'})
+//   }
 
-  res.status(200).json({
-    msg: 'get single workout',
-    data: blog
-  })
-}
+//   res.status(200).json({
+//     msg: 'get single workout',
+//     data: blog
+//   })
+// }
+
 
 // create a new blog
-const createBlog = async (req, res) => {
-  const {title, words, image} = req.body
+// const createBlog = async (req, res) => {
 
-  let emptyFields = []
+//   const {title, words, image} = req.body
 
-  if (!title) {
-    emptyFields.push('title')
-  }
-  if (!words) {
-    emptyFields.push('load')
-  }
-  if (!image) {
-    emptyFields.push('reps')
-  }
-  if (emptyFields.length > 0) {
-    return res.status(400).json({ error: 'Please fill in all fields', emptyFields })
-  }
+//   let emptyFields = []
 
-  // add to the database
+//   if (!title) {
+//     emptyFields.push('title')
+//   }
+//   if (!words) {
+//     emptyFields.push('words')
+//   }
+//   if (!image) {
+//     emptyFields.push('image')
+//   }
+//   if (emptyFields.length > 0) {
+//     return res.status(400).json({ error: 'Please fill in all fields', emptyFields })
+//   }
+
+//   // add to the database
+//   try {
+//     const blog = await Blog.create({ title, words, image })
+//     res.status(200).json({
+//       success: true,
+//       data: blog
+//     })
+//   } catch (error) {
+//     res.status(400).json({ error: error.message })
+//   }
+// };
+const getImages = async (req, res) => {
+  const { resources } = await cloudinary.search
+        .expression('folder:tc_test')
+        .sort_by('public_id', 'desc')
+        .max_results(30)
+        .execute();
+
+    const publicIds = resources.map((file) => file.public_id);
+    res.send(publicIds);
+}
+
+
+
+
+const uploadImage = async (req, res) => {
+  // none of this is being run when POST hits...
+  console.log('This is the uploadImage controller')
   try {
-    const blog = await Blog.create({ title, words, image })
-    res.status(200).json({
-      success: true,
-      data: blog
-    })
-  } catch (error) {
-    res.status(400).json({ error: error.message })
+    
+      const fileStr = req.body.data;
+      const uploadResponse = await cloudinary.uploader.upload(fileStr, {
+      folder: 'tc_test'
+      });
+      res.json({ msg: 'yaya' });
+
+  } catch (err) {
+      console.error(`This is a POST error: ${err}`);
+      res.status(500).json({ msg: 'Something went wrong' });
   }
 };
+
+
+
+
 
 // delete a blog
 const deleteBlog = async (req, res) => {
@@ -112,9 +180,11 @@ const updateBlog = async (req, res) => {
 }
 
 module.exports = {
-  getBlogs,
-  getBlog,
-  createBlog,
+  // getBlogs,
+  // getBlog,
+  getImages,
+  uploadImage,
+  // createBlog,
   deleteBlog,
   updateBlog
 }
