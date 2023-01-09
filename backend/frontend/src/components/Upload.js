@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import Alert from '../components/Alert';
+import Alert from './Alert';
 import { useAuthContext } from "../hooks/useAuthContext"
 
 export default function Upload() {
