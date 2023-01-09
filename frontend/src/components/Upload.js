@@ -3,6 +3,7 @@ import Alert from '../components/Alert';
 import { useAuthContext } from "../hooks/useAuthContext"
 
 export default function Upload() {
+
     const {user} = useAuthContext();
 
     const [fileInputState, setFileInputState] = useState('');
@@ -48,7 +49,6 @@ export default function Upload() {
 
         try {
             console.log('uploadImage(), inside TRY block')
-            // THE ISSUE IS HERE SOMEWHERE
             await fetch('/api/v1/blogs', {
                 method: 'POST',
                 body: JSON.stringify({ data: base64EncodedImage }),
@@ -67,29 +67,33 @@ export default function Upload() {
     };
     return (
         <div>
-            <h1 className="title">Upload an Image</h1>
+            <h1 className="title">upload</h1>
             <Alert msg={errMsg} type="danger" />
             <Alert msg={successMsg} type="success" />
-            <form onSubmit={handleSubmitFile} className="form">
+            <form onSubmit={handleSubmitFile} className="thisForm">
                 <input
                     id="fileInput"
                     type="file"
                     name="image"
                     onChange={handleFileInputChange}
                     value={fileInputState}
-                    className="form-input"
+                    className="thisFormInput"
                 />
-                <button className="btn" type="submit">
-                    Submit
+                <button 
+                className={previewSource ? "thisButtonWhilePreview" : "thisButton"}
+                type="submit">
                 </button>
             </form>
-            {previewSource && (
-                <img
-                    src={previewSource}
-                    alt="chosen"
-                    style={{ height: '300px' }}
-                />
-            )}
+           {previewSource && (
+              <img
+                src={previewSource}
+                alt="chosen"
+                height='300px'
+                style={{
+                    border: "8px solid #f6ff69"   
+                }}
+            />
+           )}
         </div>
     );
-}
+};

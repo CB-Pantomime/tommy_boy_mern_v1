@@ -4,10 +4,11 @@ import { Image } from 'cloudinary-react';
 import { useAuthContext } from '../hooks/useAuthContext'
 import Upload from '../components/Upload';
 
-export default function ShowImages() {
+export default function Scroll() {
+    
     const { user } = useAuthContext();
-
     const [imageIds, setImageIds] = useState();
+
     const loadImages = async () => {
         try {
             const res = await fetch('/api/v1/blogs');
@@ -19,21 +20,27 @@ export default function ShowImages() {
     };
     useEffect(() => {
         loadImages();
-    }, [loadImages]);
+    }, 
+    // removing this from the dependency callback:
+    // loadImages
+    []);
+
     return (
-        <div className="home">
+        <div className="scroll">
+
         {/* Returns for public */}
-        {!user && <div className='allImages'>        
-        <h1 className="title">show all images</h1>
-            <div className="gallery">
+        {!user && <div className='blogs'>        
+        {/* <h1 className="gallery-title"></h1> */}
+            <div className='gallery'>
             {imageIds &&
             imageIds.map((imageId, index) => (
                 // Image - defines a Cloudinary Image tag
                 <Image
+                    className="single-image"
                     key={index}
                     cloudName={'dxov7pk4a'}
                     publicId={imageId}
-                    width="300"
+                    width="500"
                     crop="scale"
                 />
                 ))}
@@ -43,25 +50,27 @@ export default function ShowImages() {
         {/* Returns for auth/logged in */}
         {user && 
         <Fragment>
-        <div className='allImages'>        
-        <h1 className="title">show all images</h1>
+            <Upload />  
+        <div className='blogs'>     
+        {/* <h1 className="gallery-title"></h1> */}
             <div className="gallery">
             {imageIds &&
                 imageIds.map((imageId, index) => (
                     // Image - defines a Cloudinary Image tag
                     <Image
+                        className="single-image"
                         key={index}
                         cloudName={'dxov7pk4a'}
                         publicId={imageId}
-                        width="300"
+                        width="500"
                         crop="scale"
                     />
                 ))}
             </div>
-        </div>
-            <Upload />             
+        </div>           
         </Fragment>
-        }          
+        }       
+
 {/* Last DIV */}
 </div>  
 )};

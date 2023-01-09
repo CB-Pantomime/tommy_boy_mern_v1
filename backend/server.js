@@ -5,7 +5,8 @@ const express = require('express')
 const mongoose = require('mongoose')
 const blogRoutes = require('./routes/blogs')
 const userRoutes = require('./routes/user')
-
+const collageRoutes = require('./routes/collage')
+const flashRoutes = require('./routes/flash')
 // express app
 const app = express()
 
@@ -33,6 +34,8 @@ app.use('/uploads', express.static('uploads'));
 
 // Register routes with our instance of express
 app.use('/api/v1/blogs', blogRoutes)
+app.use('/api/v1/collage', collageRoutes)
+app.use('/api/v1/flash', flashRoutes)
 app.use('/api/v1/user', userRoutes)
 
 // connect to db

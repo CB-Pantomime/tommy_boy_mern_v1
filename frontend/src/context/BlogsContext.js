@@ -46,12 +46,12 @@ export const BlogsContextProvider = ({ children }) => {
   // 5. extracting state and dispatch from passing in our
   // customerReducer into react's useReducer function
   const [state, dispatch] = useReducer(blogsReducer, { 
-    // state of workouts begins as null
+    // state of blogs begins as null
     blogs: null
   })
 
   // 6. returning our template of calling the Provider component
-  // on our WorkoutsContext
+  // on our BlogsContext
   return (
     <BlogsContext.Provider value={{ ...state, dispatch }}>
         {/* So here we are outputting the root app component */}

@@ -1,8 +1,8 @@
 
 // const express = require("express");
 // const router = express.Router();
-const Blog = require('../models/blogModel')
-const mongoose = require('mongoose')
+// const Blog = require('../models/blogModel')
+// const mongoose = require('mongoose')
 
 // bring in Cloudinary
 const { cloudinary } = require('../utils/cloudinary');
@@ -94,18 +94,29 @@ const { cloudinary } = require('../utils/cloudinary');
 //   }
 // };
 const getImages = async (req, res) => {
-  const { resources } = await cloudinary.search
+  // placed logic inside try catch blocks
+  // otherwise received UnhandledPromiseRejection error
+  // Ooops!
+  
+  // sort_by('public_id')
+  try {
+    const { resources } = await cloudinary.search
         .expression('folder:tc_test')
-        .sort_by('public_id', 'desc')
+        .sort_by('created_at', 'desc')
         .max_results(30)
-        .execute();
-
+        .execute()
+        
+    // console.log()
     const publicIds = resources.map((file) => file.public_id);
+    console.log(publicIds)
     res.send(publicIds);
+    
+  } catch (err) {
+    console.log(`This is a GET error: ${err}` + err);
+    res.status(500).json({ msg: 'Something went wrong' });
+  }
+  
 }
-
-
-
 
 const uploadImage = async (req, res) => {
   // none of this is being run when POST hits...
@@ -129,62 +140,62 @@ const uploadImage = async (req, res) => {
 
 
 // delete a blog
-const deleteBlog = async (req, res) => {
-  const { id } = req.params
+// const deleteBlog = async (req, res) => {
+//   const { id } = req.params
 
-  if (!mongoose.Types.ObjectId.isValid(id)) {
-    return res.status(400).json({error: 'Mongoose ObID No such blog'})
-  }
+//   if (!mongoose.Types.ObjectId.isValid(id)) {
+//     return res.status(400).json({error: 'Mongoose ObID No such blog'})
+//   }
 
-  const blog = await Blog.findOneAndDelete({_id: id})
+//   const blog = await Blog.findOneAndDelete({_id: id})
 
-  if(!blog) {
-    return res.status(400).json({error: 'Collection findById No such blog'})
-  }
+//   if(!blog) {
+//     return res.status(400).json({error: 'Collection findById No such blog'})
+//   }
 
-  res.status(202).json({
-    success: true,
-    data: blog
-  })
-}
+//   res.status(202).json({
+//     success: true,
+//     data: blog
+//   })
+// }
 
 // update a blog
-const updateBlog = async (req, res) => {
-  const { id } = req.params
+// const updateBlog = async (req, res) => {
+//   const { id } = req.params
 
-  if (!mongoose.Types.ObjectId.isValid(id)) {
-    return res.status(400).json({error: 'No such workout'})
-  }
+//   if (!mongoose.Types.ObjectId.isValid(id)) {
+//     return res.status(400).json({error: 'No such workout'})
+//   }
 
-  const blog = await Blog.findOneAndUpdate(
-    {
-    _id: id
-    }, 
-    {
-    ...req.body
-    },  
-    {
-    new: true,
-    // read about runValidators
-    runValidators: true
-    });
+//   const blog = await Blog.findOneAndUpdate(
+//     {
+//     _id: id
+//     }, 
+//     {
+//     ...req.body
+//     },  
+//     {
+//     new: true,
+//     // read about runValidators
+//     runValidators: true
+//     });
 
-  if (!blog) {
-    return res.status(400).json({error: 'No such blog'})
-  }
+//   if (!blog) {
+//     return res.status(400).json({error: 'No such blog'})
+//   }
 
-  res.status(201).json({
-    success: true,
-    data: blog
-  })
-}
+//   res.status(201).json({
+//     success: true,
+//     data: blog
+//   })
+// }
 
 module.exports = {
   // getBlogs,
   // getBlog,
   getImages,
-  uploadImage,
+  uploadImage
   // createBlog,
-  deleteBlog,
-  updateBlog
+  // deleteBlog,
+  // updateBlog
 }

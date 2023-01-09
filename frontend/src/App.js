@@ -7,23 +7,26 @@ import { BrowserRouter,
  } from 'react-router-dom';
 import { useAuthContext } from './hooks/useAuthContext';
 
-// pages & components
+// Pages 
 import Home from './pages/Home'
-import Blogs from './pages/Blogs'
+// import Blogs from './pages/Blogs'
 import About from './pages/About'
 import Flash from './pages/Flash'
 import Music from './pages/Music'
 import Sculptures from './pages/Sculptures';
 import Collage from './pages/Collage';
 import Shop from './pages/Shop'
-import Navbar from './components/Navbar'
-import Upload from './components/Upload';
-import ShowImages from './pages/ShowImages';
+import Scroll from './pages/Scroll';
+// import Navbar from './components/Navbar'
 
-// auth
+// import NewNavbar from './components/NewNavbar'
+
+// Auth
 import Signup from './pages/auth/Signup'
 import Login from './pages/auth/Login'
-
+// Nav Updated 12/15/22
+import RbsNavBar from './components/RbsNavBar';
+import 'bootstrap/dist/css/bootstrap.min.css';
 function App() {
 
   const { user } = useAuthContext()
@@ -31,7 +34,7 @@ function App() {
   return (
     <div className="App">
      <BrowserRouter>
-        <Navbar />
+        <RbsNavBar />
         <div className="pages">
           <Routes>
           <Route 
@@ -40,7 +43,7 @@ function App() {
             />
           <Route 
               path="/blogs" 
-              element={<ShowImages />} 
+              element={<Scroll />} 
             />
           <Route 
               path="/flash" 
@@ -72,6 +75,7 @@ function App() {
             path="/signup" 
             element={<Signup />} 
             />
+            {/* update endpoint to isthisalife */}
           <Route 
             path="/login" 
             element={!user ? <Login/> : <Navigate to='/blogs' />} 

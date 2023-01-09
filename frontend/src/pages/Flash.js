@@ -1,24 +1,48 @@
 
-import React from 'react';
+import React, {  useState, useEffect } from 'react';
+import { Image } from 'cloudinary-react';
 
-const Flash = () => {
+
+export default function Collage() {
+
+    const [flashIds, setFlashIds] = useState();
+
+    const loadFlash = async () => {
+        try {
+            const res = await fetch('/api/v1/flash');
+            const data = await res.json();
+            setFlashIds(data);
+            console.log(data)
+        } catch (err) {
+            console.error(err);
+        }
+    };
+    useEffect(() => {
+        loadFlash();
+    }, 
+    // removing this from the dependency callback:
+    // loadImages
+    []);
+
     return (
-        <section>
-            <div> 
-                <h1>
-                    Flash page
-                </h1>
-                <img 
-                src={require('../staticImages/brekky.webp')}
-                alt="breakfast"
-                width="500" 
-                height="500"
-                >
-
-                </img>
+       <div className='scroll'>
+        {/* <h1>collage</h1> */}
+            <div className='gallery'>
+                {flashIds &&
+                flashIds.map((flashId, index) => (
+                // Image - defines a Cloudinary Image tag
+                <Image
+                    className="flash-image-style"
+                    alt='mixed media collage'
+                    key={index}
+                    cloudName={'dxov7pk4a'}
+                    publicId={flashId}
+                    width="500"
+                    crop="scale"
+                />
+                ))}
             </div>
-        </section>
+       </div>
     )
 };
 
-export default Flash;

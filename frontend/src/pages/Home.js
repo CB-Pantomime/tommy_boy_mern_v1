@@ -3,13 +3,14 @@ import React from 'react';
 
 const Home = () => {
     return (
-        <section>
-            <div> 
-                <h1>
-                    home page
-                </h1>
-            </div>
-        </section>
+       <div className='home'>
+        <div className='home-main'>
+            <img 
+            src='https://res.cloudinary.com/dxov7pk4a/image/upload/v1671484362/tc_randump/unnamed-4_cxy4e0.png'
+            alt='abstract collage'
+            />
+        </div>
+       </div>
     )
 };
 

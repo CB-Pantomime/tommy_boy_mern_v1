@@ -1,4 +1,7 @@
 
+// NOT USING THIS PAGE AS OF 12/07/22
+// MAY RETURN TO THIS PROGRAM AT A LATER DATE
+// WHEN REFACTORING FOR CLIENT NEEDS
 import { useEffect, Fragment } from "react"
 import { useBlogsContext } from "../hooks/useBlogsContext"
 import { useAuthContext } from '../hooks/useAuthContext'

@@ -3,18 +3,23 @@ import React from 'react';
 
 const Shop = () => {
     return (
-        <section>
-            <div> 
-                <h1>
-                    everybody needs money, that's why they call it money. 
+            <div className='shop-main '> 
+                <h1 > 
+                    <a 
+                    href="https://egoprison.bigcartel.com/" 
+                    className='shop-title'
+                    > 
+                    here
+                    </a>
                 </h1>
-                <h2>Shop 
-                    <a href="https://egoprison.bigcartel.com/" 
-                    
-                    > here</a>
-                </h2>
+                <a  href="https://egoprison.bigcartel.com/">
+                {/* <img 
+                src='https://res.cloudinary.com/dxov7pk4a/image/upload/v1671484365/tc_randump/unnamed-6_lxafag.png'
+                alt='abstract collage'
+                className='shop-image'
+                ></img> */}
+                </a>
             </div>
-        </section>
     )
 };
 
